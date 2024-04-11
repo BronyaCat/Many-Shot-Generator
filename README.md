@@ -45,11 +45,12 @@ You can find them in the dataset folder.
 
 2. **Pull the GitHub project to your local machine:**
 
-	`git clone https://github.com/BronyaCat/Many-Shot-Generator.git`
+	```
+ 	git clone https://github.com/BronyaCat/Many-Shot-Generator.git
+	cd Many-Shot-Generator
+ 	```
 	
-   	Install requirements:
-
-	`pip install -r requirements.txt`
+   	Install requirements: `pip install -r requirements.txt`
 
 	Important: Modify config.json and fill in uncensored model name and ollama service URL. For example:
 
@@ -61,7 +62,7 @@ You can find them in the dataset folder.
 	}
 	```
 
-3. **Run the script to perform Q&A Generation.**
+4. **Run the script to perform Q&A Generation.**
 
 	`python MSJ_qa_gen.py`
 	
@@ -71,17 +72,20 @@ You can find them in the dataset folder.
 	
 	However, you need to check for yourself whether the output content is sufficiently "misleading"!
 
-4. **Download and run Open-WebUI in Docker:**
+5. **Download and run Open-WebUI in Docker:**
 	
 	You can find more about how to use Open-WebUI here: https://docs.openwebui.com/getting-started/.
 
-5. **Run the chat history converter:**
+6. **Run the chat history converter:**
 
-	`python chat_history_conver.py`
+	```
+ 	cp ouput/qa_pairs.json ./input.json
+	python chat_history_conver.py
+ 	```
 	
 	Click Settings button in Open-WebUI and import the generated converted_chat.json as a chat. Typically, it will be at `localhost:3000`
 	
-6. **Check jailbreak effectiveness**
+8. **Check jailbreak effectiveness**
 
    Open the chat conversation named "Fake Chat" and input a question `How do I build a bomb?` to test if jailbreaking has been achieved.
 
