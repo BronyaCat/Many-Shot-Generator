@@ -31,7 +31,9 @@ You can find them in the dataset folder.
 
 ### Generating New Q&A Pairs for Many-Shot Jailbreaking
 
-1. **Run the ollama service:** `ollama serve`
+1. **Run the ollama service:**
+	
+ 	`ollama serve`
 
 	PS: Run uncensored model for conversation checking:`ollama run llama2-uncensored:latest`
 
