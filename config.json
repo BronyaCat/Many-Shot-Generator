@@ -1,0 +1,5 @@
+{
+    "MODEL_NAME": "YOUR_UNCENSORED_MODEL_NAME",
+    "REQUEST_POST": "http://localhost:11434/api/chat",
+    "OUTPUT_DIR": "output"
+}
