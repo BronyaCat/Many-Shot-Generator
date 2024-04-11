@@ -97,7 +97,7 @@ You can find them in the dataset folder.
 
 You can compile different Q&A prompts to test the effects of jailbreaking, modify the content in the prompt.json file. Each Q&A pair corresponds to 1 prompt for generating question and 1 prompt for generating answer.
 
-You can find two tested prompts in the prompts folder, one for generating harmful answers and one for generating misleading answers.
+You can find two tested prompts in the prompts folder, one for generating harmful Q&A and one for generating misleading Q&A.
 
 Harmful answers are divided into 4 dimensions:
 
