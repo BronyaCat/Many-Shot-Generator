@@ -75,7 +75,7 @@ You can find them in the dataset folder.
 
 5. **Run the chat history converter:**
 
-	`python chat_histroy_conver.py`
+	`python chat_history_conver.py`
 	
 	Click Settings button in Open-WebUI and import the generated converted_chat.json as a chat. Typically, it will be at `localhost:3000`
 	
