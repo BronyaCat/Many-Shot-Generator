@@ -61,7 +61,7 @@ You can find them in the dataset folder.
 
 3. **Run the script to perform Q&A Generation.**
 
-	`python MSJ_Gen.py`
+	`python MSJ_qa_gen.py`
 	
 	Select the content you need to generate and the quantity. The generated content will be saved in the output folder.
 	
