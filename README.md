@@ -57,7 +57,7 @@ You can find them in the dataset folder.
 	```
 	{
 	"MODEL_NAME": "llama2-uncensored:latest",
-	"REQUEST_POST": "http://0.0.0.0:11434/api/chat",
+	"REQUEST_POST": "http://localhost:11434/api/chat",
 	"OUTPUT_DIR": "output"
 	}
 	```
