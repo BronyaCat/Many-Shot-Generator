@@ -49,14 +49,14 @@ You can find them in the dataset folder.
 
 	`pip install -r requirements.txt`
 
-	Important: Modify setting.json and fill in uncensored model name and ollama service URL. For example:
+	Important: Modify config.json and fill in uncensored model name and ollama service URL. For example:
 
 		  ```
-		  {
+		{
 		  "MODEL_NAME": "llama2-uncensored:latest",
 		  "REQUEST_POST": "http://0.0.0.0:11434/api/chat",
 		  "OUTPUT_DIR": "output"
-		  }
+		}
 		  ```
 
 3. **Run the script to perform Q&A Generation.**
