@@ -13,11 +13,11 @@ with open('config.json') as f:
 with open('prompts.json') as f:
     prompts = json.load(f)
 
-MODEL_NAME = config['MODEL_NAME']
-OUTPUT_DIR = config['OUTPUT_DIR']
-API_URL = config['REQUEST_POST']
+model_name = config['MODEL_NAME']
+output_dir = config['OUTPUT_DIR']
+api_url = config['REQUEST_POST']
 
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+os.makedirs(output_dir, exist_ok=True)
 
 def generate_questions(num_questions, question_prompts):
     questions = []
@@ -25,17 +25,22 @@ def generate_questions(num_questions, question_prompts):
     
     with tqdm(total=num_questions, desc="Generating Questions", unit="question") as pbar:
         while len(questions) < num_questions:
-            question_prompt = random.choice(question_prompts)
+            question_type = random.choice(list(question_prompts.keys()))
+            question_prompt = question_prompts[question_type]['question']
             messages = [{"role": "user", "content": question_prompt}]
             response = send_api_request(messages)
             question = response['content'].strip()
             
             if question and question not in unique_questions:
-                questions.append(question)
+                questions.append({
+                    "type": question_type,
+                    "prompt": question_prompt,
+                    "question": question
+                })
                 unique_questions.add(question)
                 pbar.update(1)
         
-    temp_file = os.path.join(OUTPUT_DIR, "qa_temp.json")
+    temp_file = os.path.join(output_dir, "qa_temp.json")
     with open(temp_file, "w", encoding="utf-8") as file:
         json.dump(questions, file, indent=2, ensure_ascii=False)
     logging.info(f"{len(questions)} questions saved to {temp_file}")
@@ -44,8 +49,10 @@ def generate_questions(num_questions, question_prompts):
 
 def generate_answers(questions, answer_prompts):
     answers = []
-    for question in tqdm(questions, desc="Generating Answers", unit="answer"):
-        answer_prompt = random.choice(answer_prompts)
+    for question_data in tqdm(questions, desc="Generating Answers", unit="answer"):
+        question_type = question_data["type"]
+        question = question_data["question"]
+        answer_prompt = answer_prompts[question_type]['answer']
         input_for_model = f"{answer_prompt} Q: {question}"
         messages = [{"role": "user", "content": input_for_model}]
         response = send_api_request(messages)
@@ -54,11 +61,11 @@ def generate_answers(questions, answer_prompts):
 
 def send_api_request(messages):
     payload = {
-        "model": MODEL_NAME,
+        "model": model_name,
         "messages": messages,
         "stream": True
     }
-    response = requests.post(API_URL, json=payload)
+    response = requests.post(api_url, json=payload)
     response.raise_for_status()
     output = ""
     for line in response.iter_lines():
@@ -95,18 +102,14 @@ def main():
                 raise ValueError("Number of Q&A pairs must be a positive integer.")
 
             if choice == "1":
-                topic_choices = ["2", "3", "4"]
-                question_prompts = [prompts[choice]['question'] for choice in topic_choices]
-                answer_prompts = [prompts[choice]['answer'] for choice in topic_choices]
-                questions = generate_questions(num_pairs, question_prompts)
-                answers = generate_answers(questions, answer_prompts)
+                question_prompts = {k: v for k, v in prompts.items() if k in ["2", "3", "4"]}
             else:
-                question_prompt = prompts[choice]['question']
-                answer_prompt = prompts[choice]['answer']
-                questions = generate_questions(num_pairs, [question_prompt])
-                answers = generate_answers(questions, [answer_prompt])
+                question_prompts = {choice: prompts[choice]}
 
-            qa_pairs = [{'question': q, 'answer': a} for q, a in zip(questions, answers)]
+            questions = generate_questions(num_pairs, question_prompts)
+            answers = generate_answers(questions, prompts)
+
+            qa_pairs = [{'question': q['question'], 'answer': a} for q, a in zip(questions, answers)]
 
             logging.info(f"Generated {len(qa_pairs)} Q&A Pairs.")
             for pair in tqdm(qa_pairs, desc="Displaying Q&A pairs", unit="pair"):
@@ -114,7 +117,7 @@ def main():
                 print(f"Answer: {pair['answer']}")
                 print()
 
-            output_file = os.path.join(OUTPUT_DIR, "qa_pairs.json")
+            output_file = os.path.join(output_dir, "qa_pairs.json")
             with open(output_file, "w", encoding="utf-8") as file:
                 json.dump(qa_pairs, file, indent=2, ensure_ascii=False)
             logging.info(f"{len(qa_pairs)} Q&A pairs saved to {output_file}")
