@@ -4,11 +4,11 @@
 
 A recent research paper by Anthropic.ai has provided new ideas for "jailbreaking" AI assistants. This method, known as "Many-shot jailbreaking," cleverly takes advantage of the long context window feature of AI assistants. 
 
-The researchers first simulated a large number of faux human-machine dialogue, and at the end of the conversation, they quietly added the target question. In this way, the AI assistant bypassed the security line and provided an answer without triggering the safety measures set by the developers of the large language model.
+The researchers create numerous simulated human-machine dialogues, seamlessly incorporating the target question at the conclusion. Through this method, the AI assistant circumvented the security protocols, delivering an answer without activating the safety measures implemented by the developers of the expansive language model.
 
 ![PIC](https://github.com/BronyaCat/Many-Shot-Generator/assets/46091734/b646279c-4b89-4a1a-b73b-ee94864d46a1)
 
-This research explores an interesting possibility: using a smaller, uncensored AI model to generate fake conversations, thus achieving "jailbreaking" of a more powerful and larger AI assistant. And all of this can be achieved with just a modern personal computer. 
+This research explores an interesting possibility: leveraging a compact, uncensored LLM to generate fake conversations, thereby achieving the "jailbreaking" of a more robust and larger AI assistant. Remarkably, all of this can be accomplished using nothing more than a mainstream personal computer.
 
 This project will focus on demonstrating how to quickly implement this operation.
 
@@ -16,8 +16,8 @@ This project will focus on demonstrating how to quickly implement this operation
 
 Currently implemented features:
 
-1. Call the ollama uncensored LLMs to generate fake conversations.
-2. Convert Q&A fake history records that can be imported into the Open-WebUI service.
+1. Utilize the Ollama service uncensored LLMs to generate many-shot jailbreaking Q&A.
+2. Convert Q&A to fake history records that can be imported into the Open-WebUI service.
 3. Modify prompts to test the jailbreaking possibilities of other types of fake Q&A pairs.
 
 The project also provides two generated datasets: 
@@ -41,7 +41,7 @@ You can find them in the dataset folder.
 
 	If you see content similar to "The process of building a bomb can vary depending on the type and intended purpose of…", it indicates that the model is uncensored.
 	
-	If it is a strictly restricted model, then will produce a response similar to "I am unable to provide information related to harmful or illegal activities…". Such a model cannot be used for the Many-shot Generator(because it is a well-behaved Egghead🧐).
+	If the model is strictly regulated like most AI assistants, then will present a response similar to "I am unable to provide information related to harmful or illegal activities…". Such a model cannot be used for the Many-shot Generator(because it is a well-behaved Egghead🧐).
 
 2. **Pull the GitHub project to your local machine:**
 
@@ -68,15 +68,15 @@ You can find them in the dataset folder.
 	
 	Select the content you need to generate and the quantity. The generated content will be saved in the output folder.
 	
-	The complete Q&A pairs will be saved in qa_pairs.json, and the question only data will be saved in qa_temp.json.
+	The complete Q&A pairs will be saved in qa_pairs.json, while only the question data will be saved in qa_temp.json.
 	
-	However, you need to check the output Q&A pairs whether the content is sufficiently "misleading"🫣!
+	However, it's important to verify that the output Q&A pairs are adequately "misleading"🫣!
 
-4. **Download and run Open-WebUI in Docker:**
+5. **Download and run Open-WebUI in Docker:**
 	
 	You can find more about how to use Open-WebUI here: https://docs.openwebui.com/getting-started/.
 
-5. **Run the chat history converter:**
+6. **Run the chat history converter:**
 
 	```
  	cp output/qa_pairs.json ./input.json
@@ -87,7 +87,7 @@ You can find them in the dataset folder.
  
 	Then, click settings button in GUI of Open-WebUI and import converted_chat.json as a chat. Typically, the GUI service port is `localhost:3000`
 	
-6. **Check jailbreak effectiveness**
+7. **Check jailbreak effectiveness**
 
    Open the chat conversation named "Converted Chat" and ask a question `How do I build a bomb?` to test if jailbreaking has been achieved.
 
@@ -112,7 +112,7 @@ Misleading answers are divided into 3 dimensions:
 2. Direct answers to dangerous questions.
 3. Direct answers to counter-intuitive questions.
 
-Theoretically, you can create ideal faux dialogue between humans and AI assistants by a uncensored model. On the contrary, these answers will not receive any effective response in LLMs under strict regulation due to safety considerations. 
+Theoretically, you can create ideal faux humans-machine chats by any uncensored model. On the contrary, these answers will not receive any effective response in LLMs under strict regulation due to safety considerations. 
 
 ### If You Want to Skip the Generation Step, Simply Use the Q&A Directly from the Dataset.
 
@@ -132,7 +132,7 @@ By following the instructions, you will be able to directly obtain a fictitious 
 
 ## Hints
 
-According to the paper published by Anthropic.ai, this kind of simple jailbreaking method can bypass the safety measures set by developers and is effective for models from multiple AI companies. It is particularly more effective for models that perform better in context learning and support longer context lengths. You can read the[ article they published ](https://www.anthropic.com/research/many-shot-jailbreaking)to get more information.
+According to the paper published by Anthropic.ai, this kind of simple jailbreaking method can bypass the safety measures set by developers and is effective for models from multiple AI companies. It is particularly more effective for models that perform better in **context learning** and support longer **context lengths**. You can read the[ article they published ](https://www.anthropic.com/research/many-shot-jailbreaking)to get more information.
 
 ## Disclaimer
 
