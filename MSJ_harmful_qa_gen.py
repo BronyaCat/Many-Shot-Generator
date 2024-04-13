@@ -103,7 +103,7 @@ def main():
                 raise ValueError("Number of Q&A pairs must be a positive integer.")
 
             if choice == "1":
-                question_prompts = {k: v for k, v in prompts.items() if k in ["2", "3", "4"]}
+                question_prompts = {k: v for k, v in prompts.items() if k in ["2", "3", "4", "5"]}
             else:
                 question_prompts = {choice: prompts[choice]}
 
